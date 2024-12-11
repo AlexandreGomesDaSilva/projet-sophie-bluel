@@ -1,0 +1,339 @@
+/* http://meyerweb.com/eric/tools/css/reset/
+   v2.0 | 20110126
+   License: none (public domain)
+*/
+
+html, body, div, span, applet, object, iframe,
+h1, h2, h3, h4, h5, h6, p, blockquote, pre,
+a, abbr, acronym, address, big, cite, code,
+del, dfn, em, img, ins, kbd, q, s, samp,
+small, strike, strong, sub, sup, tt, var,
+b, u, i, center,
+dl, dt, dd, ol, ul, li,
+fieldset, form, label, legend,
+table, caption, tbody, tfoot, thead, tr, th, td,
+article, aside, canvas, details, embed,
+figure, figcaption, footer, header, hgroup,
+menu, nav, output, ruby, section, summary,
+time, mark, audio, video {
+	margin: 0;
+	padding: 0;
+	border: 0;
+	font-size: 100%;
+	font: inherit;
+	vertical-align: baseline;
+}
+/* HTML5 display-role reset for older browsers */
+article, aside, details, figcaption, figure,
+footer, header, hgroup, menu, nav, section {
+	display: block;
+}
+body {
+	line-height: 1;
+}
+ol, ul {
+	list-style: none;
+}
+a {
+	text-decoration: none;
+	color: inherit;
+}
+blockquote, q {
+	quotes: none;
+}
+blockquote:before, blockquote:after,
+q:before, q:after {
+	content: '';
+	content: none;
+}
+table {
+	border-collapse: collapse;
+	border-spacing: 0;
+}
+/** end reset css**/
+/****************Base**********************/
+body {
+	max-width: 1140px;
+	margin: auto;
+	font-family: 'Work Sans' ;
+	font-size: 14px;
+	background: #FFFEFB;
+}
+.wrapper {
+	width: 90%;
+	margin: 50px auto 0;
+	
+}
+
+
+/*****************Header********************/
+header {
+	display: flex;
+	justify-content: space-between;
+	margin: 50px 0;;
+
+}
+section {
+	margin: 50px auto;
+}
+
+h1{
+	display: flex;
+	flex-direction: column;
+	font-family: 'Syne';
+	font-size: 22px;
+	font-weight: 800;
+	color: #B1663C
+}
+
+h1 > span {
+	font-family: 'Work Sans';
+	font-size:10px;
+	letter-spacing: 0.1em;
+;
+}
+
+h2{
+	font-family: 'Syne';
+	font-weight: 700;
+	font-size: 30px;
+	color: #1D6154
+}
+nav ul {
+	display: flex;
+	align-items: center;
+	list-style-type: none;
+
+}
+nav li {
+	padding: 0 10px;
+	font-size: 1.2em;
+	cursor: pointer;
+	color: #1D6154;
+}
+nav li img {
+	width: 22px;
+	height: auto;
+	font-weight: 700;
+	color: black; 
+}
+li:hover {
+	color: #B1663C;
+}
+nav a:hover {
+	color: black;
+	font-weight: 700;
+}
+
+/****************Introduction*****************/
+#introduction {
+	display: flex;
+	align-items: center;
+}
+#introduction figure {
+	flex: 1
+}
+#introduction img {
+	display: block;
+	margin: auto;
+	width: 80%;
+}
+
+#introduction article {
+	flex: 1
+}
+#introduction h2 {
+	margin-bottom: 1em;
+}
+
+#introduction p {
+	margin-bottom: 0.5em;
+}
+
+/******************portefolio******************/
+#portfolio h2 {
+	text-align: center;
+	margin-bottom: 1em;
+}
+
+/********************filter********************/
+.btn-filter {
+	display: flex;
+	justify-content: center;
+	align-content: center;
+	margin: 2em 0;
+	gap: 10px;
+	margin: 50px auto;
+	
+}
+.btnFilter {
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	color: #1D6154;
+	background: white;
+	margin: 0;
+	padding: 10px 20px;
+	border-radius: 60px;
+	box-sizing: border-box;
+	font-family: 'Syne', sans-serif;
+	font-weight: 700;
+	font-size: 16px;
+	text-align: center;
+	height: 37px;
+	width: 180px;
+	border: 1px solid #1D6154;
+	border-radius: 60px;
+	cursor: pointer;
+	transition: 0.3s ease-in-out;
+}
+
+.btnFilter:hover {
+	background: #1D6154;
+	color: white;
+}
+.btnFilter.active {
+	background: #1D6154;
+	color: white;
+}
+
+/********************Mode edit*******************/
+.edit {
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	color: #fff;
+	background: black;
+	height: 59px;
+	font-family: 'Work Sans', 'Segoe UI', sans-serif;
+	font-size: 16px;
+	font-weight: 400;
+}
+
+
+
+/******************Gallery***********************/
+
+.gallery {
+	margin: auto;
+	width: 100%;
+	display: grid;
+	grid-template-columns: 1fr 1fr 1fr;
+	column-gap: 20px;
+	row-gap: 20px;
+}
+
+.gallery img {
+	width: 100%;
+
+}
+
+
+/*********formulaire contact*********/
+#contact, .formLogin {
+	width: 80%;
+    margin: auto;
+}
+.login {
+	max-width: 379px;
+}
+#contact > *, .formLogin > * {
+	text-align: center;
+
+}
+#contact h2, .formLogin h2 {
+	margin-bottom: auto 20px;
+}
+
+#contact form, .formLogin form {
+	text-align: left;
+	margin-top:30px;
+	display: flex;
+	flex-direction: column;
+}
+
+#contact input, .formLogin input {
+	height: 50px;
+	font-size: 1.2em;
+	border: none;
+	box-shadow: 0px 4px 14px rgba(0, 0, 0, 0.09);
+}
+#contact label, .formLogin label {
+	margin: 2em 0 1em 0;
+}
+#contact textarea, .formLogin textarea {
+	border: none;
+	box-shadow: 0px 4px 14px rgba(0, 0, 0, 0.09);
+}
+
+input[type="submit"]{
+	font-family: 'Syne';
+	font-weight: 700;
+	color: white;
+	background-color: #1D6154;
+	margin : 2em auto ;
+	width: 180px;
+	text-align: center;
+	border-radius: 60px;
+}
+
+.btn-submit:hover {
+background: #0e2f28;
+}
+
+
+#forgetMp {
+	color: black;
+	text-decoration: underline;
+	cursor: pointer;
+	margin: 20px;
+	padding: 20px;
+}
+
+/***********style placeholder***********/
+input::placeholder {
+	color: #cccccc;
+	opacity: 0.8;
+	font-family: 'Work Sans', sans-serif;
+	font-weight: 100;
+	font-size: 0.9em;
+}
+/***********style input valid/invalid***********/
+
+/* Style par défaut pour les champs de formulaire */
+input[type="email"],
+input[type="password"] {
+border: none;
+padding: 5px;
+
+}
+
+/*Style pour les champs en cas d'erreur*/
+
+input[type="email"].error,
+input[type="password"].error {
+box-shadow:  0 0 5px 2px red;
+
+}
+
+/*Style pour message error*/
+
+#messageError {
+color: red;
+font-size: 1em;
+font-weight: bold;
+margin-top: 10px;
+text-align: center;
+}
+
+
+
+/*********footer*********/
+footer nav ul  {
+	display: flex;
+	justify-content: flex-end;
+	margin: 2em 107px 0;
+	color: black;
+	height: 60px;
+}
+
