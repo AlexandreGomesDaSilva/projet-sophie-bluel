@@ -55,9 +55,33 @@ body {
 }
 header {
 	display: flex;
+	flex-direction: column;
 	justify-content: space-between;
-	margin: 50px 0
+	/* margin: 50px 0; */
 }
+
+.edition{
+	flex-direction: row;
+	background-color: black;
+	color: white;
+	justify-content: center;
+	align-items: center;
+	gap: 21px;
+	height: 59px;
+	margin-top: 0px;
+	display: none;
+	position: absolute;
+	width: 100%;
+	left: 0;
+}
+
+.navigation {
+	display: flex;
+	flex-direction: row;
+	justify-content: space-between;
+	margin: 50px 0;
+}
+
 section {
 	margin: 50px 0
 }
@@ -95,9 +119,23 @@ nav li {
 	font-size: 1.2em;
 }
 
+nav a {
+	color: black;
+	text-decoration: none;
+}
+
+nav a:hover {
+	color: #B1663C;
+}
+
 li:hover {
 	color: #B1663C;
 }
+
+button {
+	cursor : pointer
+}
+
 #introduction {
 	display: flex;
 	align-items: center;
@@ -121,9 +159,30 @@ li:hover {
 #introduction p {
 	margin-bottom: 0.5em;
 }
+
+.projectHeader {
+	display: flex;
+	flex-direction: row;
+	justify-content: center;
+	margin-bottom: 1em;
+	gap: 20px;
+}
+
+.btnModify, .btnModify:visited {
+	background-color: transparent;
+	border: none;
+	flex-direction: row;
+	justify-content: center;
+	align-items: center;
+	gap: 10px;
+	display: none;
+	text-decoration: none;
+	color: black;
+}
+
 #portfolio h2 {
 	text-align: center;
-	margin-bottom: 1em;
+	/* margin-bottom: 1em; */
 }
 .gallery {
 	width: 100%;
@@ -186,3 +245,304 @@ footer nav ul {
 	margin: 2em
 }
 
+.buttonFiltre {
+	border: #1D6154 solid 1px;
+	border-radius: 60px;
+	background-color: white;
+	color: #1D6154;
+	font-weight: bold;
+	height: 37px;
+	font-size: 16px;
+	font-family: 'Syne';
+	padding-left: 17px;
+	padding-right: 17px;
+}
+
+#categoriesButton {
+	display: flex;
+	flex-direction: row;
+	justify-content: center;
+	gap: 10px;
+	margin-bottom: 50px;
+}
+
+.buttonFiltre:hover, .buttonFiltre:active {
+	background-color: #1D6154;
+	color: white;
+}
+
+/*********login***********/
+
+.login {
+	display: flex;
+	flex-direction: column;
+	align-items: center;
+	justify-content: center;
+	height: 500px;
+}
+
+.login h2 {
+	margin-bottom: 35px;
+	color: #1D6154;
+	font-size: 30px;
+	font-style: normal;
+	font-family: 'Syne';
+}
+
+.login form {
+	display: flex;
+	flex-direction: column;
+	gap: 40px;
+	width: 30%;
+	align-items: center;
+}
+
+.groupeInput {
+	display: flex;
+	flex-direction: column;
+	width: 100%;
+	gap: 8px;
+}
+
+.login input {
+	height: 50px;
+	border: none;
+	background-color: white;
+	box-shadow: 0px 5px 16px 5px rgba(0,0,0,0.12);
+}
+
+.connectionBtn {
+	width: 50%;
+	height: 36px;
+	color: white;
+	background-color: #1D6154;
+	border-radius: 60px;
+	border: none;
+	font-family: 'Syne';
+}
+
+.login a {
+	margin-top: 40px;
+	color: black;
+}
+
+.msgError {
+	color: red;
+}
+
+/**********Modale************/
+* {
+	box-sizing: border-box;
+}
+
+.modal{
+	position: fixed;
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	top: 0;
+	left: 0;
+	width: 100%;
+	height: 100%;
+	background: rgba(0, 0, 0, 0.8);
+}
+
+.modal-wrapper {
+	overflow: auto;
+	width: 600px;
+	max-width: calc(100vw - 20px);
+	max-height: calc(100vh - 20px);
+	padding: 20px;
+	background-color: #fff;
+}
+
+/********Header Modal*********/
+
+.headerModal {
+	display: flex;
+	flex-direction: row;
+	justify-content: end;
+}
+
+.headerModal button {
+	background-color: transparent;
+	border: none;
+	font-size: 20px;
+}
+
+.modal-wrapper h3 {
+	display: flex;
+	flex-direction: row;
+	justify-content: center;
+	font-size: 26px;
+	font-family: 'Work Sans';
+}
+
+/************Main modal**********/
+hr.solid {
+	border-top: 1px solid #bbb;
+	width: 80%;
+}
+
+.addWork {
+	font-family: 'Syne';
+	font-weight: 700;
+	color: white;
+	background-color: #1D6154;
+	margin : 2em auto ;
+	width: 180px;
+	text-align: center;
+	border-radius: 60px ;
+	display: flex;
+	flex-direction: row;
+	justify-content: center;
+	align-items: center;
+	height: 40px;
+	width: 45%;
+	font-size: 1em;
+	border: none;
+	box-shadow: 0px 4px 14px rgba(0, 0, 0, 0.09);
+}
+
+.imgGalleryModal {
+	width: 78px;
+	height: 104px;
+	margin-bottom: 20px;
+}
+
+.galleryModal {
+	display: flex;
+	flex-direction: row;
+	flex-wrap: wrap;
+	gap: 10px;
+	width: 80%;
+	justify-content: flex-start;
+	margin-top: 40px;
+	margin-bottom: 40px;
+	margin-left: 60px;
+}
+
+.galleryModal figure{
+	display: flex;
+}
+
+.deleteWorkBtn {
+	color: white;
+	background-color: black;
+	border: none;
+	font-size: 11px;
+	height: 17px;
+	width: 17px;
+	padding: 0;
+	margin-left: -20px;
+	margin-top: 5px;
+}
+
+/*******Add work Modale*******/
+
+.showAddWork{
+	display: flex;
+	flex-direction: column;
+	align-items: center;
+	justify-content: center;
+}
+
+.showAddWork h3 {
+	margin-bottom: 20px;
+}
+
+.formAddWork {
+	display: flex;
+	flex-direction: column;
+	justify-content: center;
+	align-items: center;
+	width: 70%;
+	gap: 15px;
+}
+
+.divUploadPicture{
+	display: flex;
+	flex-direction: column;
+	width: 100%;
+	align-items: center;
+	justify-content: center;
+	gap: 10px;
+}
+
+.addPicture {
+	display: flex;
+	flex-direction: column;
+	background-color: #E8F1F6;
+	justify-content: center;
+	align-items: center;
+	gap: 10px;
+	padding-top: 15px;
+	padding-bottom: 15px;
+	width: 100%;
+}
+
+.addPicture i {
+	font-size: 60px;
+	color: #B9C5CC;
+}
+
+.btnAddPicture {
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	border: none;
+	background-color: #CBD6DC;
+	color: #306685;
+	border-radius: 50px;
+	height: 36px;
+	width: 45%;
+}
+
+.addPicture p {
+	color: #444444;
+	font-size: 10px;
+	font-family: 'Work Sans';
+	font-weight: 400;
+}
+
+.formTitleAndCat {
+	display: flex;
+	flex-direction: column;
+	gap: 6px;
+	width: 100%;
+}
+
+.formTitleAndCat input, .formTitleAndCat select {
+	height: 51px;
+	border: none;
+	background-color: transparent;
+	box-shadow: 0px 4px 14px 0px rgba(0,0,0,0.1);
+}
+
+.showAddWork hr {
+	width: 100%;
+	margin-top: 30px;
+}
+
+.btnValidateFormAddWork {
+	font-family: 'Syne';
+	font-weight: 700;
+	color: white;
+	background-color: #1D6154;
+	text-align: center;
+	border-radius: 60px ;
+	display: flex;
+	flex-direction: row;
+	justify-content: center;
+	align-items: center;
+	height: 40px;
+	width: 55%;
+	font-size: 1em;
+	border: none;
+	box-shadow: 0px 4px 14px rgba(0, 0, 0, 0.09);
+	margin-bottom: 20px;
+}
+
+.btnValidateFormAddWork:disabled{
+	background-color: #A7A7A7;
+}

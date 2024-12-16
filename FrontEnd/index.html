@@ -9,18 +9,27 @@
 	<link href="https://fonts.googleapis.com/css2?family=Syne:wght@700;800&family=Work+Sans&display=swap" rel="stylesheet">
 	<meta name="description" content="">
 	<link rel="stylesheet" href="./assets/style.css">
+	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.2.1/css/all.min.css"
+        integrity="sha512-MV7K8+y+gLIBoVD59lQIYicR65iaqukzvf/nwasF0nqhPay5w/9lJmVM2hMDcnK1OnMGCdVK+iQrJ7lzPJQd1w=="
+        crossorigin="anonymous" referrerpolicy="no-referrer" />
 </head>
 <body>
 <header>
-	<h1>Sophie Bluel <span>Architecte d'intérieur</span></h1>
-	<nav>
-		<ul>
-			<li>projets</li>
-			<li>contact</li>
-			<li>login</li>
-			<li><img src="./assets/icons/instagram.png" alt="Instagram"></li>
-		</ul>
-	</nav>
+	<div id="bannerEdition" class="edition">
+		<i class="fa-regular fa-pen-to-square"></i>
+		<p>Mode édition</p>
+	</div>
+	<div class="navigation" id="navigation">
+		<h1>Sophie Bluel <span>Architecte d'intérieur</span></h1>
+		<nav>
+			<ul>
+				<li>projets</li>
+				<li>contact</li>
+				<li><a id="log" href="login.html">login</a></li>
+				<li><img src="./assets/icons/instagram.png" alt="Instagram"></li>
+			</ul>
+		</nav>
+	</div>
 </header>
 <main>
 	<section id="introduction">
@@ -35,54 +44,61 @@
 		</article>
 	</section>
 	<section id="portfolio">
-		<h2>Mes Projets</h2>
-		<div class="gallery">
-			<figure>
-				<img src="assets/images/abajour-tahina.png" alt="Abajour Tahina">
-				<figcaption>Abajour Tahina</figcaption>
-			</figure>
-			<figure>
-				<img src="assets/images/appartement-paris-v.png" alt="Appartement Paris V">
-				<figcaption>Appartement Paris V</figcaption>
-			</figure>
-			<figure>
-				<img src="assets/images/restaurant-sushisen-londres.png" alt="Restaurant Sushisen - Londres">
-				<figcaption>Restaurant Sushisen - Londres</figcaption>
-			</figure>
-			<figure>
-				<img src="assets/images/la-balisiere.png" alt="Villa “La Balisiere” - Port Louis">
-				<figcaption>Villa “La Balisiere” - Port Louis</figcaption>
-			</figure>
-			<figure>
-				<img src="assets/images/structures-thermopolis.png" alt="Structures Thermopolis">
-				<figcaption>Structures Thermopolis</figcaption>
-			</figure>
-			<figure>
-				<img src="assets/images/appartement-paris-x.png" alt="Appartement Paris X">
-				<figcaption>Appartement Paris X</figcaption>
-			</figure>
-			<figure>
-				<img src="assets/images/le-coteau-cassis.png" alt="Pavillon “Le coteau” - Cassis">
-				<figcaption>Pavillon “Le coteau” - Cassis</figcaption>
-			</figure>
-			<figure>
-				<img src="assets/images/villa-ferneze.png" alt="Villa Ferneze - Isola d’Elba">
-				<figcaption>Villa Ferneze - Isola d’Elba</figcaption>
-			</figure>
-			<figure>
-				<img src="assets/images/appartement-paris-xviii.png" alt="Appartement Paris XVIII">
-				<figcaption>Appartement Paris XVIII</figcaption>
-			</figure>
-			<figure>
-				<img src="assets/images/bar-lullaby-paris.png" alt="Bar “Lullaby” - Paris">
-				<figcaption>Bar “Lullaby” - Paris</figcaption>
-			</figure>
-			<figure>
-				<img src="assets/images/hotel-first-arte-new-delhi.png" alt="Hotel First Arte - New Delhi">
-				<figcaption>Hotel First Arte - New Delhi</figcaption>
-			</figure>
+		<div class="projectHeader" id="myProject">
+			<h2>Mes Projets</h2>
+			<a href="#modal1" id ="editionBtn" class="btnModify js-modal"><i class="fa-regular fa-pen-to-square"></i>modifier</a>
+		</div>
+		<div id="categoriesButton">
+			<button onclick="getAllWork()" class="buttonFiltre">Tous</button>
+		</div>
+		<div id="galleryImg" class="gallery">
+			
 		</div>
 	</section>
+	<aside id="modal1" class="modal" aria-hidden="true" role="dialog" aria-labelledby="titleModal" style="display: none;">
+		<div class="modal-wrapper js-modal-stop">
+			<div class="headerModal">
+				<button style="display: none;" id="btnBack"><i class="fa-solid fa-arrow-left"></i></button>
+				<button class="js-close-modal"><i class="fa-solid fa-xmark"></i></button>
+			</div>
+			<div id="deleteWork">				
+				<h3 id="titleModal">Galerie photo</h3>
+				<div class="galleryModal" id="galleryModal">
+
+				</div>
+				<hr class="solid">
+				<button class="addWork" id="btnAddWork">Ajouter une photo</button>
+			</div>
+			<div class="showAddWork" id="addWork" style="display: none;">
+				<h3 id="titleModal">Ajout photo</h3>
+				<form class="formAddWork" method="post" id="formAddWork">
+					<div class="addPicture">
+						<div id="divUploadPicture" class="divUploadPicture">
+							<i class="fa-regular fa-image"></i>
+							<label for="addPicture" class="btnAddPicture">+ Ajouter photo</label>
+							<input type="file" accept="image/jpeg, image/png" id="addPicture" name="addPicture" style="display: none;"></input>
+							<p>jpg, png : 4mo max</p>
+						</div>
+							<div class="previewImage">
+								<img id="previewImage" style="display: none;">
+							</div>
+					</div>
+					<div class="formTitleAndCat">
+						<label for="title">Titre</label>
+						<input type="text" name="title" id="title" required>
+					</div>
+					<div class="formTitleAndCat">
+						<label for="categories">Catégorie</label>
+						<select id="categories" name="categories" required>
+						</select>
+					</div>
+					<p id="msgForm"></p>
+					<hr class="solid">
+					<button class="btnValidateFormAddWork" id="btnValidateFormAddWork">Valider</button>
+				</form>
+			</div>
+		</div>
+	</aside>
 	<section id="contact">
 		<h2>Contact</h2>
 		<p>Vous avez un projet ? Discutons-en !</p>
@@ -105,5 +121,7 @@
 		</ul>
 	</nav>
 </footer>
+	<script src="script.js"></script>
+	<script src="modal.js"></script>
 </body>
 </html>
