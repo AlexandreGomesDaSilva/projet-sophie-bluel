@@ -23,6 +23,23 @@ time, mark, audio, video {
 	font: inherit;
 	vertical-align: baseline;
 }
+/* Liens sans soulignement et avec une couleur constante */
+a {
+    text-decoration: none; /* Supprime le soulignement */
+    color: inherit; /* Utilise la couleur du parent (héritée) */
+}
+
+/* Optionnel : personnalisez les couleurs pour chaque état si nécessaire */
+a:link,
+a:visited {
+    color: #333333; /* Couleur du lien normal et déjà visité */
+}
+
+a:hover,
+a:active {
+    color: #555555; /* Couleur au survol ou lorsqu'il est actif */
+}
+
 /* HTML5 display-role reset for older browsers */
 article, aside, details, figcaption, figure,
 footer, header, hgroup, menu, nav, section {
@@ -91,12 +108,20 @@ nav ul {
 
 }
 nav li {
+	display: flex;
+    align-items: center; /* Centre verticalement */
+    justify-content: center; /* Centre horizontalement (si nécessaire) */
 	padding: 0 10px;
-	font-size: 1.2em;
+    font-size: 1.2em;
+
 }
 
 li:hover {
 	color: #B1663C;
+}
+.instagram {
+	width: 22px;
+	height: 22px;
 }
 #introduction {
 	display: flex;
@@ -125,6 +150,47 @@ li:hover {
 	text-align: center;
 	margin-bottom: 1em;
 }
+/* Centrer le label */
+#portfolio label {
+	display: block; 
+	text-align: center; 
+	font-family: 'Syne', sans-serif;
+	font-size: 1.2rem;
+	font-weight: 600; 
+	color: #1D6154; 
+	background-color: #f7f7f7; 
+	border-radius: 5px; 
+	padding: 10px 20px; 
+	margin-bottom: 10px;
+	box-shadow: 0px 2px 6px rgba(0, 0, 0, 0.1);
+  }
+  .filter-container {
+	display: flex;
+	justify-content: center;
+	gap: 10px; /* Espacement entre les boutons */
+	margin-bottom: 20px;
+  }
+  
+  .filter-button {
+	padding: 10px 15px;
+	border: #1D6154 solid 1px;
+	border-radius: 60px;
+	background-color: white;
+	cursor: pointer;
+	font-size: 1rem;
+	transition: background-color 0.3s;
+  }
+  
+  .filter-button:hover {
+	background-color: #d0d0d0;
+  }
+  
+  .filter-button.active {
+	background-color: #1D6154;
+	color: #fff;
+  }
+  
+
 .gallery {
 	width: 100%;
 	display: grid;
@@ -168,6 +234,22 @@ margin: auto;
 	border: none;
 	box-shadow: 0px 4px 14px rgba(0, 0, 0, 0.09);
 }
+/* select catégories */
+#categoryFilter {
+	display: block; /* Permet à l'élément de prendre toute la largeur disponible */
+	margin: 20px auto; /* Centrer horizontalement avec une marge automatique */
+	padding: 10px;
+	font-size: 1rem;
+	border: 1px solid #ccc;
+	border-radius: 5px;
+	background-color: #fff;
+  }
+  
+  #categoryFilter:focus {
+	outline: none; /* Retirer le contour par défaut lors de la mise au point */
+	border-color: #007bff; /* Couleur de bordure lors de la mise au point */
+  }
+/* ----------------- */
 
 input[type="submit"]{
 	font-family: 'Syne';
@@ -185,4 +267,105 @@ footer nav ul {
 	justify-content: flex-end;
 	margin: 2em
 }
+.wrapper-login {
+    min-height: 100vh;
+    display: flex;
+    justify-content: center;
+}
 
+
+/* Conteneur principal */
+.login-container {
+	display: flex;
+	flex-direction: column;
+	gap: 1rem;
+    background-color: none;
+    padding: 2rem;
+    border-radius: 8px;
+    width: 100%;
+    max-width: 400px;
+    text-align: center;
+}
+/* Titre */
+.login-title {
+    font-size: 2rem;
+    color: #1D6154;
+    margin-bottom: 1.5rem;
+}
+
+/* Formulaire */
+.login-form .form-group {
+    margin-bottom: 1.5rem;
+    text-align: left;
+}
+
+/* Champs de saisie */
+.login-form input[type="email"],
+.login-form input[type="password"] {
+    width: 379px;
+    padding: 0.75rem;
+    font-size: 1rem;
+    border: none;
+    border-radius: 4px;
+    box-shadow: 0px 4px 14px 0px #00000017; /* Ombre portée */
+    box-sizing: border-box;
+    
+}
+
+/* Bouton */
+.login-button {
+    width: 179px;
+	height: 36px;
+	line-height: 1;
+    padding: 0.75rem;
+    background-color: #1D6154;
+    color: #ffffff;
+    font-size: 1rem;
+    border: none;
+    border-radius: 60px;
+    cursor: pointer;
+    transition: background-color 0.3s;
+}
+
+.login-button:hover {
+    background-color: #267d6d;
+    
+}
+
+/* Lien "Mot de passe oublié" */
+.forgot-password {
+    display: block;
+    margin-top: 1rem;
+    font-size: 0.9rem;
+    color: #3D3D3D;
+    line-height: 1; /* Réduit l'espacement vertical */
+    text-decoration: underline;
+    transition: color 0.3s;
+}
+
+.forgot-password:hover {
+    color: #515151;
+}
+.error-message-form {
+	margin: auto;
+	color: #fff; 
+	background-color: #267d6d; 
+	font-size: 18px; 
+	font-weight: bold; 
+	padding: 15px; 
+	margin-top: 10px; 
+	border-radius: 5px; 
+	text-align: center;
+	width: 290px;
+	box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1); 
+	display: none;
+	opacity: 0;
+  }
+  
+  /* Lors de l'affichage, on fait apparaître l'erreur avec une opacité de 1 */
+  .error-message-form.show {
+	display: block;
+	opacity: 1;
+  }
+
+  
