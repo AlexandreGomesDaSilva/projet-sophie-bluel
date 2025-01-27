@@ -1,61 +1,81 @@
+// @ts-nocheck
 const email = document.getElementById("email");
 const password = document.getElementById("password");
 const connexion = document.querySelector("form");
 
-// Add sample data to sessionStorage
-sessionStorage.setItem("userEmail", "sophie.bluel@test.tld");
-sessionStorage.setItem("userPassword", "S0phie");
+// Function to create and display error messages
+function displayErrorMessage(element, message) {
+  const errorMsg = document.createElement("p");
+  errorMsg.textContent = message;
+  errorMsg.style.color = "red";
+  errorMsg.classList.add("error-message");
+  element.after(errorMsg);
+}
 
-connexion.addEventListener("submit", (e) => {
+connexion.addEventListener("submit", async (e) => {
   e.preventDefault();
-
-  // Retrieve IDs from sessionStorage
-  const storedEmail = sessionStorage.getItem("userEmail");
-  const storedPassword = sessionStorage.getItem("userPassword");
 
   // Remove any existing error messages
   document.querySelectorAll(".error-message").forEach((el) => el.remove());
 
-  // Check if the email field is empty
+  // Validate inputs
+  let hasError = false;
   if (email.value === "") {
-    const wrongEmail = document.createElement("p");
-    wrongEmail.textContent = "Please enter your email";
-    wrongEmail.style.color = "red";
-    wrongEmail.classList.add("error-message");
-    email.after(wrongEmail);
-
-    setTimeout(() => {
-      wrongEmail.remove(); // Remove the error message after 5 seconds
-    }, 5000);
+    displayErrorMessage(email, "Please enter your email");
+    hasError = true;
   }
 
-  // Check if the password field is empty
   if (password.value === "") {
-    const wrongPassword = document.createElement("p");
-    wrongPassword.textContent = "Please enter your password";
-    wrongPassword.style.color = "red";
-    wrongPassword.classList.add("error-message");
-    password.after(wrongPassword);
-
-    setTimeout(() => {
-      wrongPassword.remove(); // Remove the error message after 5 seconds
-    }, 5000);
+    displayErrorMessage(password, "Please enter your password");
+    hasError = true;
   }
 
-  // Check if IDs match those in sessionStorage
-  if (email.value !== "" && password.value !== "") {
-    if (email.value !== storedEmail || password.value !== storedPassword) {
-      const errorMsg = document.createElement("p");
-      errorMsg.textContent = "Incorrect email or password";
-      errorMsg.style.color = "red";
-      errorMsg.classList.add("error-message");
-      connexion.after(errorMsg); // Display the error below the form
+  if (hasError) {
+    return; // Stop the function if there are validation errors
+  }
 
-      setTimeout(() => {
-        errorMsg.remove(); // Remove the error message after 5 seconds
-      }, 5000);
+  // Send login request to the API
+  const loginUrl = "http://localhost:5678/api/users/login";
+  const requestBody = {
+    email: email.value,
+    password: password.value,
+  };
+
+  try {
+    const response = await fetch(loginUrl, {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+        Accept: "application/json",
+      },
+      body: JSON.stringify(requestBody),
+    });
+
+    if (response.status === 200) {
+      const data = await response.json();
+
+      // Store the token in sessionStorage
+      if (typeof data.token !== "undefined" && data.token !== "") {
+        sessionStorage.setItem("authToken", data.token);
+      }
+
+      // Redirect to another page
+      window.location.href = "./index.html";
+    } else if (response.status === 401 || response.status === 404) {
+      // Unauthorized: Invalid IDs
+      displayErrorMessage(connexion, "Invalid email or password");
     } else {
-      window.location.href = "index.html"; // Redirect to the home page
+      // Handle other errors
+      displayErrorMessage(
+        connexion,
+        "An error occurred. Please try again later."
+      );
     }
+  } catch (error) {
+    console.error("Error:", error);
+    displayErrorMessage(
+      connexion,
+      "Unable to connect to the server. Please try again later."
+    );
   }
 });
