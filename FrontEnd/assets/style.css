@@ -206,10 +206,30 @@ nav li a:hover {
 #introduction p {
   margin-bottom: 0.5em;
 }
+
 #portfolio h2 {
   text-align: center;
   margin-bottom: 1em;
 }
+
+.my-projects {
+  display: flex;
+  justify-content: center;
+  align-items: baseline;
+}
+
+.edit-btn {
+  display: none;
+  margin-left: 1em;
+}
+
+.edit-btn button {
+  font-family: "Syne";
+  color: black;
+  background: none;
+  border: none;
+}
+
 .gallery {
   width: 100%;
   display: grid;
@@ -221,6 +241,7 @@ nav li a:hover {
 .gallery img {
   width: 100%;
 }
+
 #contact {
   width: 50%;
   margin: auto;

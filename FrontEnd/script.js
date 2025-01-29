@@ -57,11 +57,14 @@ buttons.forEach((button) => {
 
 // Login & Logout button management
 const loginButton = document.getElementById("login");
+const editBtn = document.querySelector(".edit-btn");
 
 if (sessionStorage.getItem("authToken")) {
   loginButton.innerHTML = "logout"; // If the user is logged in, we display the logout button
+  editBtn.style.display = "block"; // If the user is logged in, we display the edit button
 } else {
   loginButton.innerHTML = "login"; // If the user is not logged in, we display the login button
+  editBtn.style.display = "none"; // If the user is not logged in, we hide the edit button
 }
 
 loginButton.addEventListener("click", () => {
