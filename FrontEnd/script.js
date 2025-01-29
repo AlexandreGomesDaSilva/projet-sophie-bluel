@@ -45,7 +45,7 @@ buttons.forEach((button) => {
     // Filter the works
     const filteredWorks =
       category === "all"
-        ? worksResponse // Tous les travaux
+        ? worksResponse // All works
         : worksResponse.filter(
             (work) => work.categoryId === parseInt(category)
           );
@@ -53,4 +53,19 @@ buttons.forEach((button) => {
     // Update the display of works
     displayWorks(filteredWorks);
   });
+});
+
+// Login & Logout button management
+const loginButton = document.getElementById("login");
+
+if (sessionStorage.getItem("authToken")) {
+  loginButton.innerHTML = "logout"; // If the user is logged in, we display the logout button
+} else {
+  loginButton.innerHTML = "login"; // If the user is not logged in, we display the login button
+}
+
+loginButton.addEventListener("click", () => {
+  if (sessionStorage.getItem("authToken") !== "undefined") {
+    sessionStorage.removeItem("authToken"); // We remove the token in order to logout
+  }
 });
