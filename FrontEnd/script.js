@@ -72,3 +72,35 @@ loginButton.addEventListener("click", () => {
     sessionStorage.removeItem("authToken"); // We remove the token in order to logout
   }
 });
+
+// Display the modal when clicking on the edit button
+const closeOverlayBtn = document.querySelector(".fa-xmark");
+const overlay = document.querySelector(".modal-overlay");
+
+editBtn.addEventListener("click", () => {
+  document.querySelector(".modal-overlay").style.display = "flex";
+  displayWorksOnModal(worksResponse);
+});
+
+// Close the modal when clicking on the x-mark or the overlay
+closeOverlayBtn.addEventListener("click", () => {
+  document.querySelector(".modal-overlay").style.display = "none";
+});
+
+overlay.addEventListener("click", (e) => {
+  if (e.target === overlay) {
+    document.querySelector(".modal-overlay").style.display = "none";
+  }
+});
+
+// Display the works when the modal is opened
+const displayWorksOnModal = (works) => {
+  const modalGallery = document.querySelector(".modal-gallery");
+  modalGallery.innerHTML = works
+    .map((work) => {
+      return `<figure>
+        <img src="${work.imageUrl}" alt="${work.title}" />
+      </figure>`;
+    })
+    .join("");
+};
