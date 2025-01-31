@@ -22,10 +22,10 @@ const displayWorks = (works) => {
     .join("");
 };
 
-// Display all works
+// Display all works on the main page
 displayWorks(worksResponse);
 
-// Generating filter buttons
+// Generating filter buttons on the main page
 const filters = document.querySelector(".filters");
 filters.innerHTML = `
   <button data-category="all">Tous</button>
@@ -73,18 +73,25 @@ loginButton.addEventListener("click", () => {
   }
 });
 
-// Display the modal when clicking on the edit button
-const closeOverlayBtn = document.querySelector(".fa-xmark");
+// Modal management
 const overlay = document.querySelector(".modal-overlay");
+const closeOverlayBtn = document.querySelectorAll(".fa-xmark");
+const addNewWorkBtn = document.querySelector(".add-new-work-btn");
+const returnBtn = document.querySelector(".fa-arrow-left");
 
+// Open the modal & display the works when clicking on the edit button
 editBtn.addEventListener("click", () => {
   document.querySelector(".modal-overlay").style.display = "flex";
+  document.querySelector(".gallery-edition-container").style.display = "flex";
+  document.querySelector(".new-work-container").style.display = "none";
   displayWorksOnModal(worksResponse);
 });
 
 // Close the modal when clicking on the x-mark or the overlay
-closeOverlayBtn.addEventListener("click", () => {
-  document.querySelector(".modal-overlay").style.display = "none";
+closeOverlayBtn.forEach((btn) => {
+  btn.addEventListener("click", () => {
+    document.querySelector(".modal-overlay").style.display = "none";
+  });
 });
 
 overlay.addEventListener("click", (e) => {
@@ -93,9 +100,21 @@ overlay.addEventListener("click", (e) => {
   }
 });
 
-// Display the works when the modal is opened
+// Display the form when clicking on the add button
+addNewWorkBtn.addEventListener("click", () => {
+  document.querySelector(".gallery-edition-container").style.display = "none";
+  document.querySelector(".new-work-container").style.display = "flex";
+});
+
+// Return to the gallery when clicking on the return button
+returnBtn.addEventListener("click", () => {
+  document.querySelector(".gallery-edition-container").style.display = "flex";
+  document.querySelector(".new-work-container").style.display = "none";
+});
+
+// Function to recup data in order to display it in the modal
 const displayWorksOnModal = (works) => {
-  const modalGallery = document.querySelector(".modal-gallery");
+  const modalGallery = document.querySelector(".gallery-edition-works");
   modalGallery.innerHTML = works
     .map((work) => {
       return `<figure>
