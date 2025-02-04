@@ -365,6 +365,7 @@ footer nav ul {
   border-radius: 1.5em;
   padding: 0.5em 3em;
   margin: 25px auto;
+  cursor: pointer;
 }
 
 /** Add new work form **/
@@ -473,4 +474,5 @@ footer nav ul {
   border-radius: 1.5em;
   padding: 0.5em 5em;
   margin: 25px auto;
+  cursor: pointer;
 }

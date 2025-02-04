@@ -123,3 +123,16 @@ const displayWorksOnModal = (works) => {
     })
     .join("");
 };
+
+const categoryOptions = document.getElementById("category");
+
+// Function to display categories in the form
+const displayCategories = (categories) => {
+  categoryOptions.innerHTML = categories
+    .map((category) => {
+      return `<option value="${category.id}">${category.name}</option>`;
+    })
+    .join("");
+};
+
+displayCategories(categoriesResponse);
