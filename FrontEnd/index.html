@@ -110,7 +110,7 @@
           <p class="new-work-container-title">Ajout photo</p>
           <form id="upload-new-work" action="#" method="">
             <div class="upload-section">
-              <button>
+              <button id="upload-btn">
                 <i class="fa-regular fa-image"></i>
                 <input
                   type="file"
@@ -118,9 +118,7 @@
                   accept="image/jpeg, image/png"
                   hidden
                 />
-                <label for="image-upload" class="upload-label"
-                  >+ Ajouter photo</label
-                >
+                <span>+ Ajouter photo</span>
                 <p>jpg, png : 4mo max</p>
               </button>
             </div>
@@ -132,7 +130,7 @@
               <label for="category">Catégorie</label>
               <select id="category" name="category"></select>
             </div>
-            <button type="submit" class="submit-btn">Valider</button>
+            <button type="submit" class="submit-btn" disabled>Valider</button>
           </form>
         </div>
       </div>

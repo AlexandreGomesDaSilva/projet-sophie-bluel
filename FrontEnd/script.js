@@ -9,7 +9,7 @@ const categories = await fetch("http://localhost:5678/api/categories");
 const categoriesResponse = await categories.json();
 console.log(categoriesResponse);
 
-// Function to display works
+// Function to display works on the main page
 const displayWorks = (works) => {
   const gallery = document.querySelector(".gallery");
   gallery.innerHTML = works
@@ -22,7 +22,6 @@ const displayWorks = (works) => {
     .join("");
 };
 
-// Display all works on the main page
 displayWorks(worksResponse);
 
 // Generating filter buttons on the main page
@@ -55,7 +54,7 @@ buttons.forEach((button) => {
   });
 });
 
-// Login & Logout button management
+/* Login & Logout button management */
 const loginButton = document.getElementById("login");
 const editBtn = document.querySelector(".edit-btn");
 
@@ -73,7 +72,7 @@ loginButton.addEventListener("click", () => {
   }
 });
 
-// Modal management
+/** Modal management **/
 const overlay = document.querySelector(".modal-overlay");
 const closeOverlayBtn = document.querySelectorAll(".fa-xmark");
 const addNewWorkBtn = document.querySelector(".add-new-work-btn");
@@ -127,12 +126,73 @@ const displayWorksOnModal = (works) => {
 };
 
 const categoryOptions = document.getElementById("category");
-
 // Function to display categories in the form
 const displayCategories = (categories) => {
-  categoryOptions.innerHTML = categories
-    .map((category) => {
-      return `<option value="${category.id}">${category.name}</option>`;
-    })
-    .join("");
+  categoryOptions.innerHTML = `
+    <option value="0" selected></option>
+    ${categories
+      .map((category) => {
+        return `<option value="${category.id}">${category.name}</option>`;
+      })
+      .join("")}
+  `;
 };
+
+/*** New work form management ***/
+const uploadForm = document.getElementById("upload-new-work");
+const uploadBtn = document.getElementById("upload-btn");
+const imageUpload = document.getElementById("image-upload");
+const titleInput = document.getElementById("title");
+const categorySelect = document.getElementById("category");
+const submitBtn = document.querySelector(".submit-btn");
+
+// Prevent the form from being submitted
+uploadForm.addEventListener("submit", (e) => {
+  e.preventDefault();
+});
+
+// Open the file explorer when clicking on the upload button
+uploadBtn.addEventListener("click", () => {
+  imageUpload.click();
+});
+
+// Display the image when uploading
+imageUpload.addEventListener("change", () => {
+  const file = event.target.files[0];
+  if (file) {
+    uploadBtn.querySelector("i").style.display = "none";
+    uploadBtn.querySelector("span").style.display = "none";
+    uploadBtn.querySelector("p").style.display = "none";
+
+    const existingImg = uploadBtn.querySelector("img");
+    if (existingImg) {
+      existingImg.remove();
+    }
+
+    const reader = new FileReader();
+    reader.onload = (e) => {
+      const img = document.createElement("img");
+      img.src = e.target.result;
+      img.style.maxWidth = "200px";
+      img.style.maxHeight = "200px";
+      uploadBtn.style.padding = "0";
+      uploadBtn.appendChild(img);
+    };
+    reader.readAsDataURL(file);
+  }
+});
+
+// Check the form validity
+const checkFormValidity = () => {
+  if (
+    imageUpload.files.length > 0 &&
+    titleInput.value.trim() !== "" &&
+    categorySelect.value !== "0"
+  ) {
+    submitBtn.removeAttribute("disabled");
+  }
+};
+
+imageUpload.addEventListener("change", checkFormValidity);
+titleInput.addEventListener("input", checkFormValidity);
+categorySelect.addEventListener("change", checkFormValidity);
