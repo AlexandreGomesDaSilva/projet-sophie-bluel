@@ -104,6 +104,7 @@ overlay.addEventListener("click", (e) => {
 addNewWorkBtn.addEventListener("click", () => {
   document.querySelector(".gallery-edition-container").style.display = "none";
   document.querySelector(".new-work-container").style.display = "flex";
+  displayCategories(categoriesResponse);
 });
 
 // Return to the gallery when clicking on the return button
@@ -119,6 +120,7 @@ const displayWorksOnModal = (works) => {
     .map((work) => {
       return `<figure>
         <img src="${work.imageUrl}" alt="${work.title}" />
+        <i class="fa-solid fa-trash-can"></i>
       </figure>`;
     })
     .join("");
@@ -134,5 +136,3 @@ const displayCategories = (categories) => {
     })
     .join("");
 };
-
-displayCategories(categoriesResponse);
