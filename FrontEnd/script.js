@@ -2,11 +2,11 @@
 
 // Loading jobs and categories
 const works = await fetch("http://localhost:5678/api/works");
-const worksResponse = await works.json();
-console.log(worksResponse);
-
 const categories = await fetch("http://localhost:5678/api/categories");
+let worksResponse = await works.json();
 const categoriesResponse = await categories.json();
+
+console.log(worksResponse);
 console.log(categoriesResponse);
 
 // Function to display works on the main page
@@ -119,10 +119,12 @@ const displayWorksOnModal = (works) => {
     .map((work) => {
       return `<figure>
         <img src="${work.imageUrl}" alt="${work.title}" />
-        <i class="fa-solid fa-trash-can"></i>
+        <i class="fa-solid fa-trash-can" data-id="${work.id}"></i>
       </figure>`;
     })
     .join("");
+
+  attachTrashCanListeners();
 };
 
 const categoryOptions = document.getElementById("category");
@@ -196,3 +198,86 @@ const checkFormValidity = () => {
 imageUpload.addEventListener("change", checkFormValidity);
 titleInput.addEventListener("input", checkFormValidity);
 categorySelect.addEventListener("change", checkFormValidity);
+
+// Function to delete a work
+const attachTrashCanListeners = () => {
+  const trashIcons = document.querySelectorAll(".fa-trash-can");
+
+  trashIcons.forEach((icon) => {
+    icon.addEventListener("click", async (event) => {
+      const workId = event.target.getAttribute("data-id");
+
+      if (workId) {
+        try {
+          const response = await fetch(
+            `http://localhost:5678/api/works/${workId}`,
+            {
+              method: "DELETE",
+              headers: {
+                "Content-Type": "application/json",
+                Authorization: `Bearer ${sessionStorage.getItem("authToken")}`,
+                Accept: "*/*",
+              },
+            }
+          );
+
+          if (response.ok) {
+            // Delete the work from the main menu
+            worksResponse = worksResponse.filter(
+              (work) => work.id !== parseInt(workId)
+            );
+
+            // Update the display of works
+            event.target.parentElement.remove();
+            displayWorks(worksResponse);
+          } else {
+            console.error(
+              "Erreur lors de la suppression :",
+              response.statusText
+            );
+          }
+        } catch (error) {
+          console.error("Erreur réseau :", error);
+        }
+      }
+    });
+  });
+};
+
+// Function to add a new work
+const addNewWork = async () => {
+  const file = imageUpload.files[0];
+  const title = titleInput.value;
+  const category = categorySelect.value;
+
+  const formData = new FormData();
+  formData.append("image", file);
+  formData.append("title", title);
+  formData.append("category", category);
+
+  try {
+    const response = await fetch("http://localhost:5678/api/works", {
+      method: "POST",
+      headers: {
+        Authorization: `Bearer ${sessionStorage.getItem("authToken")}`,
+      },
+      body: formData, // On envoie le FormData
+    });
+
+    if (!response.ok) {
+      throw new Error(`Erreur: ${response.statusText}`);
+    }
+
+    const newWork = await response.json();
+    worksResponse.push(newWork); // Ajouter le nouveau travail à la liste
+    displayWorks(worksResponse); // Mettre à jour l'affichage principal
+    displayWorksOnModal(worksResponse); // Mettre à jour la modale
+    uploadForm.reset(); // Réinitialiser le formulaire
+    document.querySelector(".modal-overlay").style.display = "none"; // Fermer la modale
+  } catch (error) {
+    console.error("Erreur lors de l'ajout :", error);
+  }
+};
+
+// Ajoute un event listener au bouton de soumission
+submitBtn.addEventListener("click", addNewWork);
