@@ -169,7 +169,7 @@ const displayWorksOnModal = (works) => {
 const categoryOptions = document.getElementById("category");
 const displayCategories = (categories) => {
   categoryOptions.innerHTML = `
-    <option value="0" selected></option>
+    <option selected disabled>Choisir une catégorie</option>
     ${categories
       .map((category) => {
         return `<option value="${category.id}">${category.name}</option>`;
@@ -311,7 +311,7 @@ const addNewWork = async () => {
     displayWorksOnModal(worksResponse);
 
     uploadForm.reset(); // Reset the form
-    modalOverlay.style.display = "none"; // Close the modal
+    overlay.style.display = "none"; // Close the modal
   } catch (error) {
     console.error("Error during addition:", error);
   }
