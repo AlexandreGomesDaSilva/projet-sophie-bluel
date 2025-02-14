@@ -8,6 +8,32 @@ const categoriesResponse = await categories.json();
 // console.log(worksResponse);
 // console.log(categoriesResponse);
 
+// Select navigation links
+const projectsLink = document.querySelector("#portfolio-navigation");
+const contactLink = document.querySelector("#contact-navigation");
+
+// Function for smooth scrolling
+const smoothScroll = (targetId) => {
+  const targetElement = document.querySelector(targetId);
+  if (targetElement) {
+    targetElement.scrollIntoView({
+      behavior: "smooth", // Smooth scrolling
+      block: "start", // Align to the top of the section
+    });
+  }
+};
+
+// Add event listeners
+projectsLink.addEventListener("click", (e) => {
+  e.preventDefault(); // Prevent default behavior
+  smoothScroll("#portfolio");
+});
+
+contactLink.addEventListener("click", (e) => {
+  e.preventDefault(); // Prevent default behavior
+  smoothScroll("#contact");
+});
+
 // Function to display works on the main page
 const displayWorks = (works) => {
   const gallery = document.querySelector(".gallery");
@@ -26,7 +52,7 @@ displayWorks(worksResponse);
 // Generating filter buttons on the main page
 const filters = document.querySelector(".filters");
 filters.innerHTML = `
-  <button data-category="all">All</button>
+  <button data-category="all" class="active">Tous</button>
   ${categoriesResponse
     .map((category) => {
       return `<button data-category="${category.id}">${category.name}</button>`;
@@ -39,6 +65,12 @@ buttons.forEach((button) => {
   button.addEventListener("click", (event) => {
     const category = event.target.dataset.category;
     console.log(`Button clicked: ${category}`);
+
+    // Remove 'active' class from all buttons
+    buttons.forEach((btn) => btn.classList.remove("active"));
+
+    // Add 'active' class to the clicked button
+    event.target.classList.add("active");
 
     // Filter the works
     const filteredWorks =

@@ -230,6 +230,34 @@ nav li a:hover {
   border: none;
 }
 
+.filters {
+  display: flex;
+  justify-content: center;
+  margin-bottom: 2.5em;
+}
+
+.filters button {
+  font-family: "Syne";
+  border: 1px solid #1c6758;
+  background-color: transparent;
+  color: #1c6758;
+  padding: 5px 20px;
+  border-radius: 25px;
+  cursor: pointer;
+  transition: all 0.3s ease-in-out;
+  margin: 0 5px;
+}
+
+.filters button:hover {
+  background-color: #1c6758;
+  color: white;
+}
+
+.filters button.active {
+  background-color: #1c6758;
+  color: white;
+}
+
 .gallery {
   width: 100%;
   display: grid;
@@ -301,7 +329,7 @@ footer nav ul {
   color: black;
 }
 
-/** Modal **/
+/* Modal */
 
 .modal-overlay {
   position: fixed;
@@ -368,7 +396,7 @@ footer nav ul {
   cursor: pointer;
 }
 
-/** Add new work form **/
+/*** Add new work form ***/
 .new-work-container {
   flex-direction: column;
 }
