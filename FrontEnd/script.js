@@ -1,13 +1,12 @@
 // @ts-nocheck
-
 // Loading jobs and categories
 const works = await fetch("http://localhost:5678/api/works");
 const categories = await fetch("http://localhost:5678/api/categories");
 let worksResponse = await works.json();
 const categoriesResponse = await categories.json();
 
-console.log(worksResponse);
-console.log(categoriesResponse);
+// console.log(worksResponse);
+// console.log(categoriesResponse);
 
 // Function to display works on the main page
 const displayWorks = (works) => {
@@ -27,7 +26,7 @@ displayWorks(worksResponse);
 // Generating filter buttons on the main page
 const filters = document.querySelector(".filters");
 filters.innerHTML = `
-  <button data-category="all">Tous</button>
+  <button data-category="all">All</button>
   ${categoriesResponse
     .map((category) => {
       return `<button data-category="${category.id}">${category.name}</button>`;
@@ -39,14 +38,14 @@ const buttons = document.querySelectorAll(".filters button");
 buttons.forEach((button) => {
   button.addEventListener("click", (event) => {
     const category = event.target.dataset.category;
-    console.log(`Bouton cliqué : ${category}`);
+    console.log(`Button clicked: ${category}`);
 
     // Filter the works
     const filteredWorks =
       category === "all"
         ? worksResponse // All works
         : worksResponse.filter(
-            (work) => work.categoryId === parseInt(category)
+            (work) => work.categoryId === parseInt(category) // Works of a specific category
           );
 
     // Update the display of works
@@ -58,59 +57,66 @@ buttons.forEach((button) => {
 const loginButton = document.getElementById("login");
 const editBtn = document.querySelector(".edit-btn");
 
-if (sessionStorage.getItem("authToken")) {
-  loginButton.innerHTML = "logout"; // If the user is logged in, we display the logout button
-  editBtn.style.display = "block"; // If the user is logged in, we display the edit button
-} else {
-  loginButton.innerHTML = "login"; // If the user is not logged in, we display the login button
-  editBtn.style.display = "none"; // If the user is not logged in, we hide the edit button
-}
+const updateUI = () => {
+  const isLoggedIn = sessionStorage.getItem("authToken");
+  loginButton.textContent = isLoggedIn ? "logout" : "login";
+  editBtn.style.display = isLoggedIn ? "block" : "none";
+};
+
+const logout = () => {
+  sessionStorage.removeItem("authToken");
+  updateUI();
+};
 
 loginButton.addEventListener("click", () => {
-  if (sessionStorage.getItem("authToken") !== "undefined") {
-    sessionStorage.removeItem("authToken"); // We remove the token in order to logout
+  if (sessionStorage.getItem("authToken")) {
+    logout();
   }
 });
+
+// Initialize the UI according to the user's connection status
+updateUI();
 
 /** Modal management **/
 const overlay = document.querySelector(".modal-overlay");
-const closeOverlayBtn = document.querySelectorAll(".fa-xmark");
+const closeOverlayBtns = document.querySelectorAll(".fa-xmark");
 const addNewWorkBtn = document.querySelector(".add-new-work-btn");
 const returnBtn = document.querySelector(".fa-arrow-left");
+const galleryContainer = document.querySelector(".gallery-edition-container");
+const newWorkContainer = document.querySelector(".new-work-container");
 
-// Open the modal & display the works when clicking on the edit button
-editBtn.addEventListener("click", () => {
-  document.querySelector(".modal-overlay").style.display = "flex";
-  document.querySelector(".gallery-edition-container").style.display = "flex";
-  document.querySelector(".new-work-container").style.display = "none";
+// Open the modal and display the gallery
+const openModal = () => {
+  overlay.style.display = "flex";
+  galleryContainer.style.display = "flex";
+  newWorkContainer.style.display = "none";
   displayWorksOnModal(worksResponse);
-});
+};
 
-// Close the modal when clicking on the x-mark or the overlay
-closeOverlayBtn.forEach((btn) => {
-  btn.addEventListener("click", () => {
-    document.querySelector(".modal-overlay").style.display = "none";
-  });
-});
+// Close the modal
+const closeModal = () => {
+  overlay.style.display = "none";
+};
 
-overlay.addEventListener("click", (e) => {
-  if (e.target === overlay) {
-    document.querySelector(".modal-overlay").style.display = "none";
-  }
-});
-
-// Display the form when clicking on the add button
-addNewWorkBtn.addEventListener("click", () => {
-  document.querySelector(".gallery-edition-container").style.display = "none";
-  document.querySelector(".new-work-container").style.display = "flex";
+// Display the add form
+const showForm = () => {
+  galleryContainer.style.display = "none";
+  newWorkContainer.style.display = "flex";
   displayCategories(categoriesResponse);
-});
+};
 
-// Return to the gallery when clicking on the return button
-returnBtn.addEventListener("click", () => {
-  document.querySelector(".gallery-edition-container").style.display = "flex";
-  document.querySelector(".new-work-container").style.display = "none";
-});
+// Return to the edit gallery
+const showGallery = () => {
+  galleryContainer.style.display = "flex";
+  newWorkContainer.style.display = "none";
+};
+
+// Event listeners
+editBtn.addEventListener("click", openModal);
+closeOverlayBtns.forEach((btn) => btn.addEventListener("click", closeModal));
+overlay.addEventListener("click", (e) => e.target === overlay && closeModal());
+addNewWorkBtn.addEventListener("click", showForm);
+returnBtn.addEventListener("click", showGallery);
 
 // Function to recup data in order to display it in the modal
 const displayWorksOnModal = (works) => {
@@ -127,8 +133,8 @@ const displayWorksOnModal = (works) => {
   attachTrashCanListeners();
 };
 
-const categoryOptions = document.getElementById("category");
 // Function to display categories in the form
+const categoryOptions = document.getElementById("category");
 const displayCategories = (categories) => {
   categoryOptions.innerHTML = `
     <option value="0" selected></option>
@@ -195,51 +201,45 @@ const checkFormValidity = () => {
   }
 };
 
+// Event listeners to the form fields
 imageUpload.addEventListener("change", checkFormValidity);
 titleInput.addEventListener("input", checkFormValidity);
 categorySelect.addEventListener("change", checkFormValidity);
 
 // Function to delete a work
+const deleteWork = async (workId, event) => {
+  try {
+    const response = await fetch(`http://localhost:5678/api/works/${workId}`, {
+      method: "DELETE",
+      headers: {
+        "Content-Type": "application/json",
+        Authorization: `Bearer ${sessionStorage.getItem("authToken")}`,
+        Accept: "*/*",
+      },
+    });
+
+    if (!response.ok) {
+      throw new Error(`Error during deletion: ${response.statusText}`);
+    }
+
+    // Remove the element from the DOM and update the list
+    worksResponse = worksResponse.filter(
+      (work) => work.id !== parseInt(workId)
+    );
+    event.target.parentElement.remove();
+    displayWorks(worksResponse);
+    displayWorksOnModal(worksResponse);
+  } catch (error) {
+    console.error("Network error:", error);
+  }
+};
+
+// Add listeners to the trash can icons
 const attachTrashCanListeners = () => {
-  const trashIcons = document.querySelectorAll(".fa-trash-can");
-
-  trashIcons.forEach((icon) => {
-    icon.addEventListener("click", async (event) => {
+  document.querySelectorAll(".fa-trash-can").forEach((icon) => {
+    icon.addEventListener("click", (event) => {
       const workId = event.target.getAttribute("data-id");
-
-      if (workId) {
-        try {
-          const response = await fetch(
-            `http://localhost:5678/api/works/${workId}`,
-            {
-              method: "DELETE",
-              headers: {
-                "Content-Type": "application/json",
-                Authorization: `Bearer ${sessionStorage.getItem("authToken")}`,
-                Accept: "*/*",
-              },
-            }
-          );
-
-          if (response.ok) {
-            // Delete the work from the main menu
-            worksResponse = worksResponse.filter(
-              (work) => work.id !== parseInt(workId)
-            );
-
-            // Update the display of works
-            event.target.parentElement.remove();
-            displayWorks(worksResponse);
-          } else {
-            console.error(
-              "Erreur lors de la suppression :",
-              response.statusText
-            );
-          }
-        } catch (error) {
-          console.error("Erreur réseau :", error);
-        }
-      }
+      if (workId) deleteWork(workId, event);
     });
   });
 };
@@ -249,6 +249,11 @@ const addNewWork = async () => {
   const file = imageUpload.files[0];
   const title = titleInput.value;
   const category = categorySelect.value;
+
+  if (!file || !title || category === "0") {
+    console.error("Please fill in all fields.");
+    return;
+  }
 
   const formData = new FormData();
   formData.append("image", file);
@@ -261,23 +266,24 @@ const addNewWork = async () => {
       headers: {
         Authorization: `Bearer ${sessionStorage.getItem("authToken")}`,
       },
-      body: formData, // On envoie le FormData
+      body: formData,
     });
 
     if (!response.ok) {
-      throw new Error(`Erreur: ${response.statusText}`);
+      throw new Error(`Error: ${response.statusText}`);
     }
 
     const newWork = await response.json();
-    worksResponse.push(newWork); // Ajouter le nouveau travail à la liste
-    displayWorks(worksResponse); // Mettre à jour l'affichage principal
-    displayWorksOnModal(worksResponse); // Mettre à jour la modale
-    uploadForm.reset(); // Réinitialiser le formulaire
-    document.querySelector(".modal-overlay").style.display = "none"; // Fermer la modale
+    worksResponse.push(newWork);
+    displayWorks(worksResponse);
+    displayWorksOnModal(worksResponse);
+
+    uploadForm.reset(); // Reset the form
+    modalOverlay.style.display = "none"; // Close the modal
   } catch (error) {
-    console.error("Erreur lors de l'ajout :", error);
+    console.error("Error during addition:", error);
   }
 };
 
-// Ajoute un event listener au bouton de soumission
+// Add a listener to the submit button
 submitBtn.addEventListener("click", addNewWork);
