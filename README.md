@@ -1,8 +1,27 @@
 # Portfolio-architecte-sophie-bluel
 
-Code du projet 6 d'intégrateur web.
+Ce projet est un portfolio interactif pour l'architecte d'intérieur Sophie Bluel.
+Il comprend un frontend pour afficher les projets et un backend pour gérer les données.
 
-## Information pour le lancer le code
+## Fonctionnalités principales
 
- - Lancer le backend depuis votre terminal en suivant les instruction du fichier ReadMe.
- - Si vous désirez afficher le code du backend et du frontend, faites le dans 2 instances de VSCode différentes pour éviter tout problème
+- Affichage des projets avec filtres par catégorie.
+- Authentification utilisateur (connexion et déconnexion).
+- Gestion des projets (ajout, suppression) pour les utilisateurs connectés.
+- Documentation API disponible via Swagger.
+
+## Instructions pour lancer le projet
+
+1. **Backend** :
+
+   - Rendez-vous dans le dossier `Backend`.
+   - Installez les dépendances avec `npm install`.
+   - Lancez le serveur avec `npm start`.
+
+2. **Frontend** :
+   - Ouvrez le fichier `index.html` dans un navigateur.
+
+## Compte de test
+
+- **Email** : sophie.bluel@test.tld
+- **Mot de passe** : S0phie
